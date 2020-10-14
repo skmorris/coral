@@ -1,6 +1,6 @@
 ---
 title: "Coral_Model"
-author: "Sarah Morris"
+author: "Sarah Morris & Lindsey Pekurny"
 date: "10/14/2020"
 output: html_document
 ---
@@ -9,6 +9,4 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#this is a test
-
-## this is also a test
+![consensus model](/Users/sarahmorris/Desktop/MentalModeler__Model__[author]__2020-10-14_14_06_21.png)
