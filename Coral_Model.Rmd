@@ -7,5 +7,56 @@ output: html_document
 
 ```{r}
 
+
 ```
 
+Number 3: Create a new flow chart and define variables
+Note - Parrotfish CANNOT eat algal turf in this model
+
+Variables
+
+  a -> rate of macro-algae growth over coral
+  gamma -> rate of macro-algae growth over algal turf
+  d -> coral death rate
+  r -> rate of coral growth of algal turf
+  s -> ??
+  
+Parrot fish carrying capacity = K(C). K(C) = C, which is overall coral cover.
+
+
+Number 4: Program the Model
+
+-What do we want our model to show?
+  Growth rates for all 4 organisms? Or just for coral?
+
+
+```{r} 
+### Copied code from problem 2. I am going to modify this. First, I'm going to see if I can run all equations at once
+
+require(deSolve)
+## Loading required package: deSolve
+# Initial values
+
+state <- c(N=50.5)   ### I think 10 and 50 may be an equilibrium point
+times <- seq(0,100,by=1)
+
+# Parameters
+parameters <- c(b = 2.4,c=0.02,M=50,d=0.2)
+
+# Model
+sterile_insect <- function(t,state,parameters){
+  with(as.list(c(state,parameters)),{
+       dN <- b*N/(N+M) - d - c*N
+      list(c(dN))   
+  })}
+
+# Solve model and plot results
+out1 <- ode(y = state,times=times,func=sterile_insect,parms=parameters)
+par(mfrow=c(1,1))
+plot(out1[,1],out1[,2],ylab='N',xlab='time',las=1, pch = 19)
+
+```
+
+Testing
+test2
+test3
