@@ -47,9 +47,17 @@ Number 4: Program the Model
 
 require(deSolve)
 ## Loading required package: deSolve
-# Initial values
 
-state <- c(N=50.5)   ### I think 10 and 50 may be an equilibrium point
+## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced
+
+C <- 10
+C <- as.numeric(C)
+R <- 5            ### R stands for algal turf
+R <- as.numeric(R)
+M <- 20
+M <- as.numeric(M)
+T_state <- c(R = 10)
+M_state <- c(M = 20)
 times <- seq(0,100,by=1)
 
 # Parameters
@@ -58,14 +66,14 @@ parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49)
 # Model
 coral <- function(t,state,parameters){
   with(as.list(c(state,parameters)),{
-       dN <- 
+       dN <- (r*R*C) - (d*C) - (a*M*C)
       list(c(dN))   
   })}
 
 # Solve model and plot results
-out1 <- ode(y = state,times=times,func=sterile_insect,parms=parameters)
+out1 <- ode(y = state,times=times,func=coral,parms=parameters)
 par(mfrow=c(1,1))
-plot(out1[,1],out1[,2],ylab='N',xlab='time',las=1, pch = 19)
+plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
 
 ```
 
