@@ -33,11 +33,11 @@ Parrot fish carrying capacity = K(C). K(C) = C, which is overall coral cover.
 Number 4: Program the Model
 
 -What do we want our model to show?
-  Growth rates for all 4 organisms? Or just for coral?
+  Growth rates for all 4 organisms - can be plotted separately or all on one plot
 
 
 ```{r} 
-### Copied code from problem 2. I am going to modify this. First, I'm going to see if I can run all equations at once
+### Copied code from problem 2. I am going to modify this.
 
 require(deSolve)
 ## Loading required package: deSolve
@@ -47,12 +47,12 @@ state <- c(N=50.5)   ### I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-parameters <- c(b = 2.4,c=0.02,M=50,d=0.2)
+parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49)
 
 # Model
-sterile_insect <- function(t,state,parameters){
+coral <- function(t,state,parameters){
   with(as.list(c(state,parameters)),{
-       dN <- b*N/(N+M) - d - c*N
+       dN <- 
       list(c(dN))   
   })}
 
