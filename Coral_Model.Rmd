@@ -5,8 +5,7 @@ date: "10/14/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r}
+
 ```
 
-![consensus model](/Users/sarahmorris/Desktop/MentalModeler__Model__[author]__2020-10-14_14_06_21.png)
