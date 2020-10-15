@@ -15,6 +15,12 @@ knitr::include_graphics('/Users/sarahmorris/Desktop/MentalModeler__Model__[autho
 
 
 ```
+**#3**
+**Flow diagram for coral reef system**
+
+#insert new model here
+#Explain what mechanisms might explain which arrows point where in the flow diagram
+#insert table with completed parameter descriptions
 
 Number 3: Create a new flow chart and define variables
 Note - Parrotfish CANNOT eat algal turf in this model
@@ -62,12 +68,6 @@ par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='N',xlab='time',las=1, pch = 19)
 
 ```
-**#3**
-**Flow diagram for coral reef system**
-
-#insert new model here
-#Explain what mechanisms might explain which arrows point where in the flow diagram
-#insert table with completed parameter descriptions
 
 **#4**
 #program the model
@@ -76,8 +76,3 @@ plot(out1[,1],out1[,2],ylab='N',xlab='time',las=1, pch = 19)
 #Produce figures and design analyses to address the following questions: 
 **(a) What are the long-term dynamics of the system with the default parameters given below?**
 **(b) What are the most important parameters in determining the long-term dynamics?**
-
-Testing
-test2
-test3
-test4 fml
