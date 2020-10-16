@@ -88,7 +88,7 @@ turf <- function(t,turf_state,turf_parameters){
   })}
 
 # Solve model and plot results
-out1 <- ode(y = turf_state, times=times,func=coral,parms=turf_parameters)
+out1 <- ode(y = turf_state, times=times,func= turf, parms=turf_parameters)
 par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='Turf',xlab='time',las=1, pch = 19)
 
@@ -112,11 +112,33 @@ macro <- function(t,macro_state,macro_parameters){
   })}
 
 # Solve model and plot results
-out1 <- ode(y = macro_state, times=times,func=coral,parms=macro_parameters)
+out1 <- ode(y = macro_state, times=times,func=macro,parms=macro_parameters)
 par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='Macro',xlab='time',las=1, pch = 19)
 
 ```
+
+``` {r}
+
+### Parrotfish
+
+parrot_state <- seq(P = 10)## I think 10 and 50 may be an equilibrium point
+times <- seq(0,100,by=1)
+
+# Parameters
+parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C =50)
+
+# Model
+parrot <- function(t,parrot_state,parrot_parameters){
+  with(as.list(c(parrot_state,parrot_parameters)),{
+       dP <- (1 - (P/((r*R*C) - (d*C) - (a*M*C))))
+      list(c(dP))   
+  })}
+
+# Solve model and plot results
+out1 <- ode(y = parrot_state, times=times,func=parrot,parms=macro_parameters)
+par(mfrow=c(1,1))
+plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 
 
 ```
