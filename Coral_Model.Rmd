@@ -139,16 +139,15 @@ plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
   - The long term dynamics are dependent upon the population sizes of macroalgae, algal turf, parrotfish, and coral.
 
 **(b) What are the most important parameters in determining the long-term dynamics?**
-  - Coral is one of the most important parameters in determing the long-term dynamics; it influences the growth of         every other organism in the system.
+  - Coral is one of the most important parameters in determining the long-term dynamics; it influences the growth of every other organism in the system.
 
 
 ``` {r}
-### Below, I am trying to make For loops to test our models at different parameters. 
+### Below, I am trying to make For loops to test our models at different parameters. This first one shows how parrotfish population changes in response to coral population changes.
 
-parrot_state <- c(x = seq(0,1, by = 0.1))
 x <- seq(0,1, by = 0.1) ### variable that changes, in this case, coral.
 
-s <- as.numeric(s <- 0.5)
+s <- as.numeric(s <- 0.49)
 C <- as.numeric(C <- 1)
 P <- as.numeric(P <- 0.5)
 
@@ -164,7 +163,7 @@ for( i in x){
   parrotpop <- parrot(i)
 }
 print(parrotpop)
-
+ 
 
 x <- as.data.frame(x)
 parrotpop <- as.data.frame(parrotpop)
@@ -172,5 +171,42 @@ parrotpop <- as.data.frame(parrotpop)
 parrot_plot <- cbind(x, parrotpop)
 plot(parrot_plot, xlab = 'Coral', ylab = 'Parrotfish')  ## as coral increases, so does parrotfish populations
 
+
+```
+
+```{r}
+
+x <- seq(0,1, by = 0.1) ### variable that changes, in this case.
+
+## Below parameters do not change
+s <- as.numeric(s <- 0.49)
+a <- as.numeric(a <- 0.1)
+g <- as.numeric(g <- 0.8)
+d <- as.numeric(d <- 0.44)
+
+## Below parameters can be changed
+M <- as.numeric(M <- 0.5)
+C <- as.numeric(C <- 0.5)
+P <- as.numeric(P <- 0.5)
+R <- as.numeric(R <- 0.8)
+
+
+# Model
+coralpop <- function(pop){
+       dC <- (r*x*C) - (d*C) - (a*M*C)
+      list(c(dC))   
+  }
+
+coralpop <- c()
+for( i in x){
+  coralpop <- parrot(i)
+}
+print(coralpop)
+ 
+x <- as.data.frame(x)
+coralpop <- as.data.frame(coralpop)
+
+parrot_plot <- cbind(x, coralpop)
+plot(parrot_plot, xlab = 'Algal Turf', ylab = 'Coral')
 
 ```
