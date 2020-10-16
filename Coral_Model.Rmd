@@ -37,7 +37,7 @@ require(deSolve)
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-coral_state <- c(N = 50)## I think 10 and 50 may be an equilibrium point
+coral_state <- c(C = 50)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
