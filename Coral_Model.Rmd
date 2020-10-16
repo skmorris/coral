@@ -41,18 +41,8 @@ coral_state <- seq(C = .5)
 times <- seq(0,100,by=1)
 
 # Parameters
-coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = .5, R = .5, C = .5)
+coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = .5, R = .1, C = .01)
 coral_paramters <- as.numeric(coral_parameters)
-
-# Parameters
-#coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44, r = 1, s = 0.49, M = 100, R = 100)
-
-
-coral_state <- seq(C = 50)## I think 10 and 50 may be an equilibrium point
-times <- seq(0,100,by=1)
-
-# Parameters
-coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44, r = 1, s = 0.49, M = 100, R = 100, C = 0)
 
 
 # Model
@@ -146,26 +136,41 @@ plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 **#5**
 #Produce figures and design analyses to address the following questions: 
 **(a) What are the long-term dynamics of the system with the default parameters given below?**
+  - The long term dynamics are dependent upon the population sizes of macroalgae, algal turf, parrotfish, and coral.
 
 **(b) What are the most important parameters in determining the long-term dynamics?**
+  - Coral is one of the most important parameters in determing the long-term dynamics; it influences the growth of         every other organism in the system.
 
 
 ``` {r}
-### For loop to test our models
+### Below, I am trying to make For loops to test our models at different parameters. 
 
-x <- seq(0,1, by = 0.1)
+parrot_state <- c(x = seq(0,1, by = 0.1))
+x <- seq(0,1, by = 0.1) ### variable that changes, in this case, coral.
 
-count <- 0
+s <- as.numeric(s <- 0.5)
+C <- as.numeric(C <- 1)
+P <- as.numeric(P <- 0.5)
+
+parrot <- function(pop){
+       dP <- (s*P)*(1- (P/(x)))
+      list(c(dP))   
+  }
+
+### The below for loop explores what the parrotfish population 
+
+parrotpop <- c()
 for( i in x){
-  parrot
+  parrotpop <- parrot(i)
 }
+print(parrotpop)
 
 
+x <- as.data.frame(x)
+parrotpop <- as.data.frame(parrotpop)
 
-
-
-
-
+parrot_plot <- cbind(x, parrotpop)
+plot(parrot_plot, xlab = 'Coral', ylab = 'Parrotfish')  ## as coral increases, so does parrotfish populations
 
 
 ```
