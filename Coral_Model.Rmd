@@ -30,8 +30,8 @@ Variables
   a -> rate of macro-algae growth over coral
   gamma -> rate of macro-algae growth over algal turf
   d -> coral death rate
-  r -> rate of coral growth of algal turf
-  s -> ??
+  r -> rate of coral growth on algal turf
+  s -> growth rate of parrotfish
   
 Parrot fish carrying capacity = K(C). K(C) = C, which is overall coral cover.
 
