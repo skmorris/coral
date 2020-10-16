@@ -37,11 +37,11 @@ require(deSolve)
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-coral_state <- seq(C = .5)
+coral_state <- seq(C = .5, M = .25, R = .25) ## Initial starting states; state should add up to 1
 times <- seq(0,100,by=1)
 
 # Parameters
-coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = .5, R = .1, C = .01)
+coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49) ### parameters stay constant
 coral_paramters <- as.numeric(coral_parameters)
 
 
@@ -63,7 +63,7 @@ coralplot <- plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
 ``` {r}
 ### Algal Turf
 
-turf_state <- seq(R = .5)## I think 10 and 50 may be an equilibrium point
+turf_state <- seq(C = .25, M = .25, R = .25, P = .25)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
@@ -87,7 +87,7 @@ plot(out1[,1],out1[,2],ylab='Turf',xlab='time',las=1, pch = 19)
 
 ### Macro algae
 
-macro_state <- seq(M = .5)
+macro_state <- seq(C = .25, M = .25, R = .25, P = .25)
 times <- seq(0,100,by=1)
 
 # Parameters
