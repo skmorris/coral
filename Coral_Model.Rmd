@@ -37,26 +37,30 @@ require(deSolve)
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-coral_state <- seq(C = .5, M = .25, R = .25) ## Initial starting states; state should add up to 1
-times <- seq(0,100,by=1)
+coral_state <- c(C = .75, M = .125, R = .125, P = 1) ## Initial starting states; state should add up to 1 (disregard parrotfish)
+times <- seq(0,100, by = 0.1)
 
 # Parameters
 coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49) ### parameters stay constant
-coral_paramters <- as.numeric(coral_parameters)
 
 
 # Model
 coral <- function(t,coral_state,coral_parameters){
   with(as.list(c(coral_state,coral_parameters)),{
        dC <- (r*R*C) - (d*C) - (a*M*C)
-      list(c(dC))   
+       dT <- (P*M/(M+R) - (g*M*R) - (r*R*C) + (d*C))
+       dM <- ((a*M*C) - ((P*M)/(M+R)) + (g*M*R))
+       dP <- (s*P)*(1- (P/(C)))
+      list(c(dC, dT, dM, dP))   
   })}
 
 # Solve model and plot results
 out1 <- ode(y = coral_state, times=times, func=coral, parms=coral_parameters)
-par(mfrow=c(1,1))
+par(mfrow=c(2,2))
 coralplot <- plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
-
+coralplot <- plot(out1[,1],out1[,3],ylab='Algal Turf',xlab='time',las=1, pch = 19)
+coralplot <- plot(out1[,1],out1[,4],ylab='Macroalgae',xlab='time',las=1, pch = 19)
+coralplot <- plot(out1[,1],out1[,5],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 ```
 
 
@@ -307,5 +311,35 @@ macropop <- as.data.frame(macropop)
 
 macro_plot <- cbind(x, turfpop)
 plot(turf_plot, xlab = 'Coral', ylab = 'Macroalgae')
+
+```
+
+```{r}
+
+require(deSolve)
+
+pars <- c(a = 0.1, gamma = 0.8, r = 1.0, d = 0.44, s = 0.49, sigma = 0.5, kappa= 1.014, j=1.68, sigma = 0.5, phi = 0.2)
+
+yini  <- c(M = 0.01, C = 0.9, T = 0, P = 1, X = 0.5)
+times <- seq(0, 100, by = 0.1)
+
+coupled_model <- function(Time, State, Pars) {
+  with(as.list(c(State, Pars)), {
+    dM <-  a*M*C - (P*M)/(M+T) + gamma*M*T
+    dC <-  r*T*C - d*C - a*M*C
+    dT <- (P*M)/(M+T) - gamma*M*T - r*T*C + d*C
+    dP <- s*P*(1 - P/C) - sigma*P*(1 - X)
+    dX <- kappa*X*(1 - X)*(-1 + j*(1 - C) - sigma*P*(1 - X) + phi*(2*X - 1))
+    return(list(c(dM,dC,dT,dP,dX)))  
+  })
+}
+
+out   <- ode(yini, times, coupled_model, pars)
+
+par(mfrow=c(1,2))
+matplot(out[ , 1], out[ , 2:5], type = "l", xlab = "time", ylab = "Percent cover",main = "Ecological dynamics", lwd = 2,ylim=c(0,1))
+legend('topright',legend = c('macroalgae','coral reef','turf algae','parrotfish'),col = c(1,2,3,4),pch = 18)
+
+matplot(out[ , 1], out[ , 6], type = "l", xlab = "time", ylab = "Fraction that are conservationists",main = "Conservation opinion", lwd = 2,ylim=c(0,1),col=5)
 
 ```
