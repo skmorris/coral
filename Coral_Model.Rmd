@@ -50,21 +50,15 @@ require(deSolve)
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-#C <- 1
-#C <- as.numeric(C)
-#R <- 100            ### R stands for algal turf
-#R <- as.numeric(R)
-#M <- 200
-#M <- as.numeric(M)
-coral_state <- seq(C = 1)## I think 10 and 50 may be an equilibrium point
+coral_state <- seq(C = 50)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 2000, R = 100)
+coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, R = 100)
 
 # Model
 coral <- function(t,coral_state,coral_parameters){
-  with(as.list(c(state,coral_parameters)),{
+  with(as.list(c(coral_state,coral_parameters)),{
        dC <- (r*R*C) - (d*C) - (a*M*C)
       list(c(dC))   
   })}
@@ -84,7 +78,7 @@ turf_state <- seq(R = 100)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 20, P = 10, C =1)
+turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, P = 10, C =50)
 
 # Model
 turf <- function(t,turf_state,turf_parameters){
@@ -108,7 +102,7 @@ macro_state <- seq(M = 100)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-macro_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 20, P = 10, C =1)
+macro_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, P = 10, C =50)
 
 # Model
 macro <- function(t,macro_state,macro_parameters){
