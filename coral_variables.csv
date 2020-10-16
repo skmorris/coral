@@ -1,0 +1,7 @@
+﻿Parameter,Description,Value
+a,rate of macroalgae growth over coral,0.1/y
+gamma,rate of macroalgae growth over algal turf,0.8/y
+r,rate of coral growth on algal turf,1.0/y
+d,coral death rate,0.44/y
+s,intrinsic growth rate of parrotfish population,0.49
+K(C) ,carrying capacity of parrotfish,C
