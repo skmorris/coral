@@ -147,9 +147,20 @@ plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 
 x <- seq(0,1, by = 0.1) ### variable that changes, in this case, coral.
 
+## Below parameters do not change
 s <- as.numeric(s <- 0.49)
-C <- as.numeric(C <- 1)
+a <- as.numeric(a <- 0.1)
+g <- as.numeric(g <- 0.8)
+d <- as.numeric(d <- 0.44)
+r <- as.numeric(r <- 1)
+
+## Below parameters can be changed
+M <- as.numeric(M <- 0.5)
+C <- as.numeric(C <- 0.5)
 P <- as.numeric(P <- 0.5)
+R <- as.numeric(R <- 0.8)
+
+## Creating the function
 
 parrot <- function(pop){
        dP <- (s*P)*(1- (P/(x)))
@@ -176,6 +187,8 @@ plot(parrot_plot, xlab = 'Coral', ylab = 'Parrotfish')  ## as coral increases, s
 
 ```{r}
 
+### For loop for coral populations. You can change the variables by substituting x in for R, C, or M. Note - if you make substitution make sure you also change the name of the x-axis.
+
 x <- seq(0,1, by = 0.1) ### variable that changes, in this case.
 
 ## Below parameters do not change
@@ -191,22 +204,108 @@ P <- as.numeric(P <- 0.5)
 R <- as.numeric(R <- 0.8)
 
 
-# Model
-coralpop <- function(pop){
+# Creating the function
+coral <- function(pop){
        dC <- (r*x*C) - (d*C) - (a*M*C)
       list(c(dC))   
   }
 
+# Creating the loop
 coralpop <- c()
 for( i in x){
-  coralpop <- parrot(i)
+  coralpop <- coral(i)
 }
 print(coralpop)
  
+# Making the plot
 x <- as.data.frame(x)
 coralpop <- as.data.frame(coralpop)
 
-parrot_plot <- cbind(x, coralpop)
-plot(parrot_plot, xlab = 'Algal Turf', ylab = 'Coral')
+coral_plot <- cbind(x, coralpop)
+plot(coral_plot, xlab = 'Algal Turf', ylab = 'Coral')
+
+```
+
+```{r}
+
+### For loop for algal turf populations. You can change the variables by substituting x in for R, C, or M. Note - if you make substitution make sure you also change the name of the x-axis.
+
+x <- seq(0,1, by = 0.1) ### variable that changes, in this case.
+
+## Below parameters do not change
+s <- as.numeric(s <- 0.49)
+a <- as.numeric(a <- 0.1)
+g <- as.numeric(g <- 0.8)
+d <- as.numeric(d <- 0.44)
+r <- as.numeric(r <- 1)
+
+## Below parameters can be changed
+M <- as.numeric(M <- 0.5)
+C <- as.numeric(C <- 0.5)
+P <- as.numeric(P <- 0.5)
+R <- as.numeric(R <- 0.8)
+
+
+# Creating the function
+turf <- function(pop){
+       dT <- (x*M/(M+R) - (g*M*R) - (r*R*C) + (d*C))
+      list(c(dT))  
+  }
+
+# Creating the loop
+turfpop <- c()
+for( i in x){
+  turfpop <- turf(i)
+}
+print(turfpop)
+ 
+# Making the plot
+x <- as.data.frame(x)
+turfpop <- as.data.frame(turfpop)
+
+turf_plot <- cbind(x, turfpop)
+plot(turf_plot, xlab = 'Parrotfish', ylab = 'Algal Turf')
+
+```
+
+```{r}
+
+### For loop for macroalgae populations. You can change the variables by substituting x in for R, C, or M. Note - if you make substitution make sure you also change the name of the x-axis.
+
+x <- seq(0,1, by = 0.1) ### variable that changes, in this case.
+
+## Below parameters do not change
+s <- as.numeric(s <- 0.49)
+a <- as.numeric(a <- 0.1)
+g <- as.numeric(g <- 0.8)
+d <- as.numeric(d <- 0.44)
+r <- as.numeric(r <- 1)
+
+## Below parameters can be changed
+M <- as.numeric(M <- 0.5)
+C <- as.numeric(C <- 0.5)
+P <- as.numeric(P <- 0.5)
+R <- as.numeric(R <- 0.5)
+
+
+# Creating the function
+macro <- function(pop){
+       dM <- ((a*M*x) - ((P*M)/(M+R)) + (g*M*R))
+      list(c(dM)) 
+  }
+
+# Creating the loop
+macropop <- c()
+for( i in x){
+  macropop <- macro(i)
+}
+print(macropop)
+ 
+# Making the plot
+x <- as.data.frame(x)
+macropop <- as.data.frame(macropop)
+
+macro_plot <- cbind(x, turfpop)
+plot(turf_plot, xlab = 'Coral', ylab = 'Macroalgae')
 
 ```
