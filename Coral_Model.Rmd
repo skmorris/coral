@@ -50,11 +50,11 @@ require(deSolve)
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-coral_state <- seq(C = 50)## I think 10 and 50 may be an equilibrium point
+coral_state <- seq(C = 0)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, R = 100)
+coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, R = 100, C = 0)
 
 # Model
 coral <- function(t,coral_state,coral_parameters){
@@ -66,7 +66,7 @@ coral <- function(t,coral_state,coral_parameters){
 # Solve model and plot results
 out1 <- ode(y = coral_state, times=times,func=coral,parms=coral_parameters)
 par(mfrow=c(1,1))
-plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
+coralplot <- plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
 
 ```
 
@@ -78,7 +78,7 @@ turf_state <- seq(R = 100)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, P = 10, C =50)
+turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, P = 10, C = 0)
 
 # Model
 turf <- function(t,turf_state,turf_parameters){
@@ -98,11 +98,11 @@ plot(out1[,1],out1[,2],ylab='Turf',xlab='time',las=1, pch = 19)
 
 ### Macro algae
 
-macro_state <- seq(M = 100)## I think 10 and 50 may be an equilibrium point
+macro_state <- seq(M = 100)
 times <- seq(0,100,by=1)
 
 # Parameters
-macro_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, P = 10, C =50)
+macro_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, P = 10, C = 0, M = 100)
 
 # Model
 macro <- function(t,macro_state,macro_parameters){
@@ -113,7 +113,7 @@ macro <- function(t,macro_state,macro_parameters){
 
 # Solve model and plot results
 out1 <- ode(y = macro_state, times=times,func=macro,parms=macro_parameters)
-par(mfrow=c(1,1))
+#par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='Macro',xlab='time',las=1, pch = 19)
 
 ```
@@ -122,21 +122,21 @@ plot(out1[,1],out1[,2],ylab='Macro',xlab='time',las=1, pch = 19)
 
 ### Parrotfish
 
-parrot_state <- seq(P = 10)## I think 10 and 50 may be an equilibrium point
+parrot_state <- seq(P = 10)
 times <- seq(0,100,by=1)
 
 # Parameters
-parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C =50)
+parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C = 0, P = 10)
 
 # Model
-parrot <- function(t,parrot_state,parrot_parameters){
+parrot <- function(t, parrot_state, parrot_parameters){
   with(as.list(c(parrot_state,parrot_parameters)),{
        dP <- (1 - (P/((r*R*C) - (d*C) - (a*M*C))))
       list(c(dP))   
   })}
 
 # Solve model and plot results
-out1 <- ode(y = parrot_state, times=times,func=parrot,parms=macro_parameters)
+out1 <- ode(y = parrot_state, times=times, func=parrot, parms= parrot_parameters)
 par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 
