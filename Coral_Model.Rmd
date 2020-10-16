@@ -8,53 +8,45 @@ output: html_document
 **Part A**
 **Our Consensus Flow Diagram**
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r echo=FALSE}
 
-knitr::include_graphics('/Users/sarahmorris/Desktop/MentalModeler__Model__[author]__2020-10-14_14_06_21.png')
-
+knitr::include_graphics('/Users/sarahmorris/Documents/R/QUANT/coral/model-coral_0.png')
 
 ```
 **#3**
 **Flow diagram for coral reef system**
 
-#insert new model here
-#Explain what mechanisms might explain which arrows point where in the flow diagram
-#insert table with completed parameter descriptions
+```{r echo=FALSE}
+knitr::include_graphics('/Users/sarahmorris/Documents/R/QUANT/coral/model-coral.png')
+```
 
-Number 3: Create a new flow chart and define variables
-Note - Parrotfish CANNOT eat algal turf in this model
+In this flow diagram, macroalgae grows on top of coral, which is a negative effect for the coral. Coral grows on algal turf, which negatively effects the algal turf. Parrotfish eat the macroalgae, negatively effecting macroalgae. Macroalgae can grow over algal turf, which negatively impacts the algal turf. Parrotfish have an indirect positive effect on coral by eating the algae smothering the coral, and coral has an indirect positive effect on parrotfish by providing a substrate for macroalgae, which parrotfish eat, to grow on. 
 
-Variables
+```{r echo=FALSE}
+read.csv("/Users/sarahmorris/Documents/R/QUANT/coral/coral_variables.csv")
+```
 
-  a -> rate of macro-algae growth over coral
-  gamma -> rate of macro-algae growth over algal turf
-  d -> coral death rate
-  r -> rate of coral growth on algal turf
-  s -> growth rate of parrotfish
+**# 4: Program the Model**  
+
+  Growth rates for all 4 organisms plotted separately 
   
-Parrot fish carrying capacity = K(C). K(C) = C, which is overall coral cover.
-
-
-Number 4: Program the Model
-
--What do we want our model to show?
-  Growth rates for all 4 organisms - can be plotted separately or all on one plot
-
-test
 ```{r} 
-### Copied code from problem 2. I am going to modify this and create 4 separate plots.
 
 require(deSolve)
 ## Loading required package: deSolve
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-coral_state <- seq(C = 0)## I think 10 and 50 may be an equilibrium point
+coral_state <- seq(C = 0)
 times <- seq(0,100,by=1)
 
 # Parameters
 coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, R = 100, C = 0)
+coral_paramters <- as.numeric(coral_parameters)
+
+# Parameters
+#coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44, r = 1, s = 0.49, M = 100, R = 100)
+
 
 # Model
 coral <- function(t,coral_state,coral_parameters){
@@ -64,7 +56,7 @@ coral <- function(t,coral_state,coral_parameters){
   })}
 
 # Solve model and plot results
-out1 <- ode(y = coral_state, times=times,func=coral,parms=coral_parameters)
+out1 <- ode(y = coral_state, times=times, func=coral, parms=coral_parameters)
 par(mfrow=c(1,1))
 coralplot <- plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
 
@@ -78,7 +70,7 @@ turf_state <- seq(R = 100)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, P = 10, C = 0)
+turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 100, P = 10, C = 0, R = 100)
 
 # Model
 turf <- function(t,turf_state,turf_parameters){
@@ -98,7 +90,7 @@ plot(out1[,1],out1[,2],ylab='Turf',xlab='time',las=1, pch = 19)
 
 ### Macro algae
 
-macro_state <- seq(M = 100)
+#macro_state <- seq(M = 100)
 times <- seq(0,100,by=1)
 
 # Parameters
@@ -124,6 +116,7 @@ plot(out1[,1],out1[,2],ylab='Macro',xlab='time',las=1, pch = 19)
 
 parrot_state <- seq(P = 10)
 times <- seq(0,100,by=1)
+test <- seq(0,10,by = 0.1)
 
 # Parameters
 parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C = 0, P = 10)
@@ -131,12 +124,12 @@ parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 1
 # Model
 parrot <- function(t, parrot_state, parrot_parameters){
   with(as.list(c(parrot_state,parrot_parameters)),{
-       dP <- (1 - (P/((r*R*C) - (d*C) - (a*M*C))))
+       dP <- (1- (P/(r*R*C)) - (d*C) - (a*M*C))
       list(c(dP))   
   })}
 
 # Solve model and plot results
-out1 <- ode(y = parrot_state, times=times, func=parrot, parms= parrot_parameters)
+out1 <- ode(y = test, times=times, func=parrot, parms= parrot_parameters)
 par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 
@@ -146,4 +139,5 @@ plot(out1[,1],out1[,2],ylab='Parrotfish',xlab='time',las=1, pch = 19)
 **#5**
 #Produce figures and design analyses to address the following questions: 
 **(a) What are the long-term dynamics of the system with the default parameters given below?**
+
 **(b) What are the most important parameters in determining the long-term dynamics?**
