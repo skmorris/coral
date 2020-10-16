@@ -121,17 +121,17 @@ plot(out1[,1],out1[,2],ylab='Macro',xlab='time',las=1, pch = 19)
 
 ### Parrotfish
 
-parrot_state <- seq(X = .5)
+parrot_state <- c(P = .5)
 times <- seq(0,100,by=1)
-test <- seq(0,10,by = 0.1)
+
 
 # Parameters
-parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C = 0, P = 10)
+parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C = 0)
 
 # Model
 parrot <- function(t, parrot_state, parrot_parameters){
   with(as.list(c(parrot_state,parrot_parameters)),{
-       dP <- (1- (P/(r*R*C)) - (d*C) - (a*M*C))
+       dP <- (1- (P/((r*R*C) - (d*C) - (a*M*C))))
       list(c(dP))   
   })}
 
