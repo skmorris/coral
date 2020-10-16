@@ -123,10 +123,16 @@ plot(out1[,1],out1[,2],ylab='Macro',xlab='time',las=1, pch = 19)
 
 parrot_state <- c(P = .5)
 times <- seq(0,100,by=1)
+<<<<<<< HEAD
 
 
 # Parameters
 parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C = 0)
+=======
+
+# Parameters
+parrot_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, R = 100, M = 100, C = 50)
+>>>>>>> f01ab247075a2ea742c6eadf6e06d64d38ccfa76
 
 # Model
 parrot <- function(t, parrot_state, parrot_parameters){
