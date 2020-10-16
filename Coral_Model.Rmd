@@ -10,20 +10,20 @@ output: html_document
 
 ```{r echo=FALSE}
 
-knitr::include_graphics('/Users/sarahmorris/Documents/R/QUANT/coral/model-coral_0.png')
+knitr::include_graphics('model-coral_0.png')
 
 ```
 **#3**
 **Flow diagram for coral reef system**
 
 ```{r echo=FALSE}
-knitr::include_graphics('/Users/sarahmorris/Documents/R/QUANT/coral/model-coral.png')
+knitr::include_graphics('model-coral.png')
 ```
 
 In this flow diagram, macroalgae grows on top of coral, which is a negative effect for the coral. Coral grows on algal turf, which negatively effects the algal turf. Parrotfish eat the macroalgae, negatively effecting macroalgae. Macroalgae can grow over algal turf, which negatively impacts the algal turf. Parrotfish have an indirect positive effect on coral by eating the algae smothering the coral, and coral has an indirect positive effect on parrotfish by providing a substrate for macroalgae, which parrotfish eat, to grow on. 
 
 ```{r echo=FALSE}
-read.csv("/Users/sarahmorris/Documents/R/QUANT/coral/coral_variables.csv")
+read.csv("coral_variables.csv")
 ```
 
 **# 4: Program the Model**  
@@ -37,11 +37,11 @@ require(deSolve)
 
 ## This first one is for coral. You can change the values as you like and see how coral's growth rate is influenced. I am confused on what 'state' does?
 
-coral_state <- c(C = 50)## I think 10 and 50 may be an equilibrium point
+coral_state <- seq(C = 50)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44, r = 1, s = 0.49, M = 100, R = 100)
+coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44, r = 1, s = 0.49, M = 100, R = 100, C = 0)
 
 # Model
 coral <- function(t,coral_state,coral_parameters){
