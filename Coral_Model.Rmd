@@ -43,7 +43,7 @@ Number 4: Program the Model
 
 
 ```{r} 
-### Copied code from problem 2. I am going to modify this.
+### Copied code from problem 2. I am going to modify this and create 4 separate plots.
 
 require(deSolve)
 ## Loading required package: deSolve
@@ -56,64 +56,51 @@ require(deSolve)
 #R <- as.numeric(R)
 #M <- 200
 #M <- as.numeric(M)
-state <- seq(C = 1)## I think 10 and 50 may be an equilibrium point
+coral_state <- seq(C = 1)## I think 10 and 50 may be an equilibrium point
 times <- seq(0,100,by=1)
 
 # Parameters
-parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 2000, R = 100)
+coral_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 2000, R = 100)
 
 # Model
-coral <- function(t,state,parameters){
-  with(as.list(c(state,parameters)),{
+coral <- function(t,coral_state,coral_parameters){
+  with(as.list(c(state,coral_parameters)),{
        dC <- (r*R*C) - (d*C) - (a*M*C)
       list(c(dC))   
   })}
 
 # Solve model and plot results
-out1 <- ode(y = state, times=times,func=coral,parms=parameters)
+out1 <- ode(y = coral_state, times=times,func=coral,parms=coral_parameters)
 par(mfrow=c(1,1))
 plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
 
 ```
 
-```{r}
 
-### Probably just ignore this dumpster fire
+``` {r}
+### Algal Turf
 
-C <- 1
-C <- as.numeric(C)
-R <- 100            ### R stands for algal turf
-R <- as.numeric(R)
-M <- 200
-M <- as.numeric(M)
-a <- 0.1
-a <- as.numeric(a)
-g <- 0.8
-g <- as.numeric(g)
-d <- 0.44
-d <- as.numeric(d)
-r <- 1
-r <- as.numeric(r)
+turf_state <- seq(R = 100)## I think 10 and 50 may be an equilibrium point
+times <- seq(0,100,by=1)
 
 # Parameters
-#parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49)
+turf_parameters <- c(a = 0.1,g = 0.8, d = 0.44,r = 1, s = 0.49, M = 20, P = 10, C =1)
 
 # Model
-coral <- function(test){
-  coral_pop <- (r*R*C) - (d*C) - (a*M*C)
-    }
-
-#plot(coral)
-
-#plot(x = c(10,50),y=c(0,0),xlim=c(0,100))
-curve(expr = coral, from = 0, to = 1,add=F)
+turf <- function(t,turf_state,turf_parameters){
+  with(as.list(c(turf_state,turf_parameters)),{
+       dT <- (P*M/(M+R) - (g*M*R) - (r*R*C) + (d*C))
+      list(c(dT))   
+  })}
 
 # Solve model and plot results
-#out1 <- ode(y = state, times=times,func=coral,parms=parameters)
-#@par(mfrow=c(1,1))
-#plot(out1[,1],out1[,2],ylab='Coral',xlab='time',las=1, pch = 19)
+out1 <- ode(y = turf_state, times=times,func=coral,parms=turf_parameters)
+par(mfrow=c(1,1))
+plot(out1[,1],out1[,2],ylab='Turf',xlab='time',las=1, pch = 19)
 
 ```
+
+
 
 **#5**
 #Produce figures and design analyses to address the following questions: 
